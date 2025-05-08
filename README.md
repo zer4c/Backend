@@ -21,6 +21,10 @@ Esto iniciara el servicio en localhost:8000
 ## Servicios
 
 - Healthy - localhost:8000/healthy/ 
-
-
-
+- Product CRUD - localhost:800/product/
+    - todos los productos `get /product/`
+    - enviar producto `post /product/`
+    - obtener un solo producto `get /product/:id`
+    - eliminar un producto `delete /product/:id`
+    - actualizar un producto `put /product/:id`
+    - actualizar parte de producto `patch /product/:id`
