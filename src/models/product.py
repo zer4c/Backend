@@ -2,9 +2,9 @@ from pydantic import BaseModel
 
 class Product(BaseModel):
     id: str | None = None
-    name: str
+    name: str | None = None
     brand: str | None = None
-    stock: int
-    batch: str
-    expiration: str
+    stock: str | None = None
+    batch: str | None = None
+    expiration: str | None = None
     discount: float | None = None

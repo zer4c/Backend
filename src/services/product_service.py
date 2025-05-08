@@ -30,20 +30,26 @@ def remove_product(id: int)-> Optional[dict]:
     return None
 
 
-def update_product(product: dict) -> None:
-    id = product['id']
+def update_product(product: dict, id: int) -> None | dict:
     produc_act = get_product_by_id(id)
     if produc_act is not None:
         remove_product(id)
         data_cache.append(product)
+        return product
+    else:
+        return None
 
-def patch_product(info: dict) -> None:
-    id = info['id']
+def patch_product(info: dict, id: int) -> None | dict:
     product = get_product_by_id(id)
     if product is not None:
-        keys = list(info.keys())
-        for key in keys:
-            product[key] = info[key] 
+        print(list(info.keys()))
+        print(list(product.keys()))
+        for key in list(info.keys()):
+            if info[key] is not None:
+                product[key] = info[key] 
+        return info
+    else:
+        return None
 
 
 
