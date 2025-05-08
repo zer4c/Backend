@@ -2,7 +2,7 @@ import json
 from typing import Optional
 
 def __load_data():
-    with open("../assets/data.json", 'r', encoding='utf-8') as archivo:
+    with open("src/assets/data.json", 'r', encoding='utf-8') as archivo:
         return json.load(archivo)
 
 data_cache = __load_data()
@@ -33,14 +33,14 @@ def remove_product(id: int)-> Optional[dict]:
 def update_product(product: dict) -> None:
     id = product['id']
     produc_act = get_product_by_id(id)
-    if(produc_act != None):
+    if produc_act is not None:
         remove_product(id)
         data_cache.append(product)
 
 def patch_product(info: dict) -> None:
     id = info['id']
     product = get_product_by_id(id)
-    if(product != None):
+    if product is not None:
         keys = list(info.keys())
         for key in keys:
             product[key] = info[key] 
