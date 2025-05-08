@@ -23,14 +23,12 @@ def get_product_by_id(id: int) -> Optional[dict]:
     produc = next((prod for prod in data if prod['id'] == id), None)
     return produc
 
-def remove_product(id: int) -> None:
-    i = 0
-    for prod in data_cache:
-        if(prod['id'] != id):
-            i = i + 1
-        else: 
-            break
-    data_cache.pop(i)
+def remove_product(id: int)-> Optional[dict]:
+    for i, prod in enumerate(data_cache):
+        if prod.get('id') == id:
+            return data_cache.pop(i)
+    return None
+
 
 def update_product(product: dict) -> None:
     id = product['id']
