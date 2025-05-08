@@ -10,9 +10,9 @@ data_cache = __load_data()
 def add_product(product: dict) -> None:
     maxi = 0
     for products in data_cache:
-        if(maxi < products['id']):
-            maxi = products['id']
-    product['id'] = maxi+1
+        if(maxi < int(products['id'])):
+            maxi = int(products['id'])
+    product['id'] = str(maxi+1)
     data_cache.append(product)
 
 def get_all_products() -> list:

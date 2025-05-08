@@ -1,10 +1,12 @@
 import src.services.product_service as ps 
 from typing import Optional
 
-def add_product_response(product: dict) -> Optional[str]:
-    if 'id' not in list(product.keys()):
-        ps.add_product()
+def add_product_response(product: dict) -> str:
+    if product['id'] is None:
+        ps.add_product(product)
+        return "Se añadio el producto"
     else: 
+        print(list(product.keys()))
         return "error 400 Bad request"
 
 def get_products_response():

@@ -1,11 +1,13 @@
 from fastapi import APIRouter
 import src.controllers.product_controller as pc
+from src.models.product import Product
 
 router = APIRouter()
 
 @router.post("/")
-def add_product(product: dict):
-    return pc.add_product_response()
+def add_product(product: Product):
+    print(product.model_dump())
+    return pc.add_product_response(product.model_dump())
 
 @router.get("/")
 def all_products():
