@@ -9,8 +9,21 @@ def add_product(product: Product):
     return pc.add_product_response(product)
 
 @router.get("/")
-def all_products():
-    return pc.get_products_response()
+def all_products(brand: str | None = None,
+                 stockover: str | None = None,
+                 stockbelow: str | None = None,
+                 discountover: str | None = None,
+                 discountbelow: str | None = None,
+                 expireover: str | None = None,
+                 expirebelow: str | None = None
+                 ):
+    return pc.get_products_response(brand,
+                                    stockover,
+                                    stockbelow,
+                                    discountover,
+                                    discountbelow,
+                                    expireover,
+                                    expirebelow)
 
 @router.get("/:{id}")
 def get_product_id(id):

@@ -52,4 +52,51 @@ def patch_product(info: dict, id: int) -> None | dict:
         return None
 
 
+def filter_get_by_brand(brand: str) -> list:
+    data = []
+    for product in data_cache:
+        if(product['brand'].lower() == brand):
+            data.append(product)
+    return data
 
+def filter_get_by_stockover(stockover: int) -> list:
+    data = []
+    for product in data_cache:
+        if(int(product['stock']) >= stockover):
+            data.append(product)
+    return data
+
+def filter_get_by_stockbelow(stockbelow: int) -> list:
+    data = []
+    for product in data_cache:
+        if(int(product['stock']) < stockbelow):
+            data.append(product)
+    return data
+
+def filter_get_by_discountbelow(discountbelow: int) -> list:
+    data = []
+    for product in data_cache:
+        if(int(product['discount']) < discountbelow):
+            data.append(product)
+    return data
+
+def filter_get_by_discountover(discountover: int) -> list:
+    data = []
+    for product in data_cache:
+        if(int(product['discount']) >= discountover):
+            data.append(product)
+    return data
+
+def filter_get_by_expireover(expireover: int) -> list:
+    data = []
+    for product in data_cache:
+        if(int(product['expiration'].replace("-", "")) >= expireover):
+            data.append(product)
+    return data
+
+def filter_get_by_expirebelow(expirebelow: int) -> list:
+    data = []
+    for product in data_cache:
+        if(int(product['expiration'].replace("-", "")) < expirebelow):
+            data.append(product)
+    return data
