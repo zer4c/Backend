@@ -28,3 +28,10 @@ Esto iniciara el servicio en localhost:8000
     - eliminar un producto `delete /product/:id`
     - actualizar un producto `put /product/:id`
     - actualizar parte de producto `patch /product/:id`
+- filtros de productos por medio de query params solo uno a la vez
+    - por "brand"
+    - por "stockover" y "stockbelow"
+    - por "discountover" y "discountbelow"
+    - por "expireover" y "expirebelow"
+
+    
