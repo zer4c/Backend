@@ -54,7 +54,7 @@ def get_products_response(
     else:
         response = "error 400 Bad Request"
     if(type(response) is list and len(response) == 0):
-        response = "Ningun producto encontrado"
+        response = "error 404 Ningun producto encontrado"
     return response
 
 
