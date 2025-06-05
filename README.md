@@ -1,22 +1,33 @@
 ## Dependencias
 
 - [uv](https://docs.astral.sh/uv/getting-started/installation/)
-- conda o [miniconda](https://www.anaconda.com/docs/getting-started/miniconda/install)
 
 ## Intalacion
 
 ```
 git clone git@github.com:zer4c/Backend.git
 cd backend    
-conda env create -f enviroment.yml
-conda activate backend
 uv sync
 ```
 ## Uso de proyecto
 
+al hacer el el comando anterior `uv sync`, la herramienta uv creara un .venv local
+para activar este entorno virtual utilice: 
+
+`source .venv/bin/activate`
+
+para desactivarlo utilice:
+
+`deactivate`
+
+mientras este activado el entorno virtual puede ejecutar el proyecto. 
+
 `fastapi dev main.py`
 
-Esto iniciara el servicio en localhost:8000
+Esto iniciara el servicio en localhost:8000 y se refrescara con cada cambio, pero esto
+solo es para desarrollo.
+
+
 
 ## Servicios
 
