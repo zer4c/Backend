@@ -18,8 +18,17 @@ def add_user(user: User, session: SessionDep):
     session.refresh(user)
     session.close()
 
-def get_all_users(session):
-    users = session.exec(select(User)).all()
+def get_all_users(session, city, country, email):
+    if city and country:
+        users = session.exec(select(User).where(User.city == city, User.country == country)).all()
+    elif city:
+        users = session.exec(select(User).where(User.city == city)).all()
+    elif country:
+        users = session.exec(select(User).where(User.country == country)).all()
+    elif email:
+        users = session.exec(select(User).where(User.email == email)).all()
+    else:
+        users = session.exec(select(User)).all()
     session.close()
     return users
 

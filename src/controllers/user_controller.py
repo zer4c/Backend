@@ -23,8 +23,8 @@ def add_user_response(user: User, session):
     us.add_user(user, session)
     return "user added successfully"
 
-def get_all_users_response(session):
-    users = us.get_all_users(session)
+def get_all_users_response(session, city, country, email):
+    users = us.get_all_users(session, city, country, email)
     if not users:
         raise exceptions.HTTPException(
             status_code=404,

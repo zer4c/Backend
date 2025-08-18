@@ -12,8 +12,11 @@ def add_user(user: User, session: SessionDep):
     return uc.add_user_response(user, session)
 
 @router.get("/", status_code=status.HTTP_200_OK)
-def get_all_users(session: SessionDep):
-    return uc.get_all_users_response(session)
+def get_all_users(session: SessionDep, 
+                  city: str | None = None,
+                  country: str | None = None,
+                  email: str | None = None):
+    return uc.get_all_users_response(session, city, country, email)
 
 @router.get("/{id}", status_code=status.HTTP_200_OK)
 def get_user(id: int, session: SessionDep):
