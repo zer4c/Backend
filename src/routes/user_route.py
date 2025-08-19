@@ -1,6 +1,7 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, Depends
 from src.models.user import User
 from src.database import SessionDep
+from src.auth import validate_user
 
 import src.controllers.user_controller as uc
 
@@ -8,7 +9,7 @@ router = APIRouter()
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-def add_user(user: User, session: SessionDep):
+def add_user(user: User, session: SessionDep, current_user: str = Depends(validate_user)):
     return uc.add_user_response(user, session)
 
 @router.get("/", status_code=status.HTTP_200_OK)
@@ -23,13 +24,13 @@ def get_user(id: int, session: SessionDep):
     return uc.get_user_response(id, session)
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_user(id: int, session: SessionDep):
+def delete_user(id: int, session: SessionDep, current_user: str = Depends(validate_user)):
     return uc.delete_user_response(id, session)
 
 @router.put("/{id}", status_code=status.HTTP_200_OK)
-def update_user(user: User, id: int, session: SessionDep):
+def update_user(user: User, id: int, session: SessionDep, current_user: str = Depends(validate_user)):
     return uc.update_user_response(user, id, session)
 
 @router.patch("/{id}", status_code=status.HTTP_200_OK)
-def patch_user(user: User, id: int, session: SessionDep):
+def patch_user(user: User, id: int, session: SessionDep,current_user: str = Depends(validate_user)):
     return uc.patch_user_response(user, id, session)
