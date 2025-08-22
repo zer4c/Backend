@@ -1,6 +1,6 @@
 import src.services.user_service as us
 from fastapi import exceptions
-from src.models.user import User
+from src.models.user_model import User
 
 def add_user_response(user: User, session):
     if user.id is not None:

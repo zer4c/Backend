@@ -1,5 +1,5 @@
 import os
-from src.models.user import User
+from src.models.user_model import User
 from sqlmodel import select
 from cryptography.fernet import Fernet
 from dotenv import load_dotenv

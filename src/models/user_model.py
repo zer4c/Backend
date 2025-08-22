@@ -8,3 +8,4 @@ class User(SQLModel, table=True):
     country: str 
     city: str
     password: str
+    role: str
