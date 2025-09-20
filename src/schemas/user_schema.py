@@ -11,6 +11,15 @@ class UserCreate(BaseModel):
     role: str
 
 class UserUpdate(BaseModel):
+    name: str
+    lastname: str
+    email: EmailStr
+    country: str
+    city: str 
+    password: str 
+    role: str
+
+class UserPatch(BaseModel):
     name: str | None = None
     lastname: str | None = None
     email: EmailStr | None = None
