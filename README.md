@@ -1,3 +1,18 @@
+# Descripcion
+
+Este proyecto es una API REST hecha con el framework de Fastapi.
+
+## Caracteristicas 
+
+- Los usuarios tienen roles, ADMIN y USER, donde el administrador se valida con un JWT Bearer, este se valida a travez de un middleware.
+
+- Utiliza Mysql como gestor de BBDD, en el codigo se maneja a travez del ORM sqlModel
+
+- Autenticacion de datos a travez de modelos Pydantic.
+
+- El proyecto utiliza el modelo Modelo-Vista-Controlador, y DTO para respuesta de los datos.
+
+
 ## Dependencias
 
 - [uv](https://docs.astral.sh/uv/getting-started/installation/)
