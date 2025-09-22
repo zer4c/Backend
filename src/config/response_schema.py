@@ -1,7 +1,9 @@
 from typing import Generic, TypeVar
+
 from pydantic import BaseModel
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class IResponse(BaseModel, Generic[T]):
     detail: str

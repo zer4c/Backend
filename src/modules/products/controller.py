@@ -1,5 +1,5 @@
-import src.services.product_service as ps
-from src.models.product import Product
+import src.modules.products.service as ps
+from src.modules.products.schema import Product
 
 
 def add_product_response(product: Product) -> str:
@@ -53,7 +53,7 @@ def get_products_response(
         response = ps.filter_get_by_expirebelow(int(expirebelow.replace("-", "")))
     else:
         response = "error 400 Bad Request"
-    if(type(response) is list and len(response) == 0):
+    if type(response) is list and len(response) == 0:
         response = "error 404 Ningun producto encontrado"
     return response
 

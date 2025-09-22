@@ -1,15 +1,18 @@
 import os
-from src.models.user_model import User
-from sqlmodel import select
+
 from cryptography.fernet import Fernet
 from dotenv import load_dotenv
-from src.database import SessionDep
 from fastapi import HTTPException
+from sqlmodel import select
+
+from src.database import SessionDep
+from src.modules.users.model import User
 
 load_dotenv()
 
 CRYPT_KEY = os.getenv("CRYPT_KEY")
 fernet = Fernet(CRYPT_KEY)
+
 
 def add_user(user: User, session: SessionDep):
     user.password = fernet.encrypt(user.password.encode()).decode()
@@ -18,9 +21,12 @@ def add_user(user: User, session: SessionDep):
     session.refresh(user)
     session.close()
 
+
 def get_all_users(session, city, country, email):
     if city and country:
-        users = session.exec(select(User).where(User.city == city, User.country == country)).all()
+        users = session.exec(
+            select(User).where(User.city == city, User.country == country)
+        ).all()
     elif email:
         users = session.exec(select(User).where(User.email == email)).all()
     elif city:
@@ -32,6 +38,13 @@ def get_all_users(session, city, country, email):
     session.close()
     return users
 
+
+def get_user_by_email(session: SessionDep, email: str):
+    user = session.exec(select(User).where(User.email == email)).all()
+    session.close()
+    return user
+
+
 def get_user(id: int, session: SessionDep):
     user = session.get(User, id)
     if not user:
@@ -39,6 +52,7 @@ def get_user(id: int, session: SessionDep):
         return None
     session.close()
     return user
+
 
 def remove_user(id: int, session: SessionDep):
     user = session.get(User, id)
@@ -50,12 +64,13 @@ def remove_user(id: int, session: SessionDep):
     session.close()
     return user
 
+
 def update_user(user: User, id: int, session: SessionDep):
     user_search = session.get(User, id)
     if not user_search:
         session.close()
         return None
-    
+
     for key in user.model_dump(exclude_unset=True).keys():
         if key != "password":
             setattr(user_search, key, getattr(user, key))
@@ -67,11 +82,12 @@ def update_user(user: User, id: int, session: SessionDep):
     session.close()
     return user_search
 
+
 def patch_user(user: User, id: int, session: SessionDep):
     user_search = session.get(User, id)
     if not user_search:
         session.close()
-        return None   
+        return None
     user_dump = user.model_dump(exclude_unset=True)
     old_email = user_search.email
     for key in user_dump.keys():
@@ -80,8 +96,7 @@ def patch_user(user: User, id: int, session: SessionDep):
         if key == "password":
             if "email" not in user_dump.keys() or user_dump["email"] != old_email:
                 raise HTTPException(
-                    status_code=400,
-                    detail="Password cannot be updated."
+                    status_code=400, detail="Password cannot be updated."
                 )
             user_search.password = fernet.encrypt(user_dump[key].encode()).decode()
         else:

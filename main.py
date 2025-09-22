@@ -1,7 +1,13 @@
-from fastapi import FastAPI
-from src.routes import healthy_route, product_route, user_route
-from src.database import iniciate_database
 from contextlib import asynccontextmanager
+
+from fastapi import Depends, FastAPI
+
+import src.modules.health.route as healthRoutes
+import src.modules.products.route as productsRoutes
+import src.modules.users.route as usersRoutes
+from src.database import iniciate_database
+from src.modules.auth.jwt import validate_session_user
+
 
 @asynccontextmanager
 async def iniciate_app(app: FastAPI):
@@ -9,8 +15,11 @@ async def iniciate_app(app: FastAPI):
     yield
     print("terminate")
 
+
 app = FastAPI(lifespan=iniciate_app)
 
-app.include_router(healthy_route.router, prefix="/healthy")
-app.include_router(product_route.router, prefix="/product")
-app.include_router(user_route.router, prefix="/user")
+app.include_router(healthRoutes.router, prefix="/healthy")
+app.include_router(productsRoutes.router, prefix="/product")
+app.include_router(
+    usersRoutes.router, prefix="/user", dependencies=[Depends(validate_session_user)]
+)

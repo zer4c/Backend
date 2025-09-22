@@ -1,23 +1,26 @@
 from pydantic import BaseModel, EmailStr
 
+
 class UserCreate(BaseModel):
     id: None = None
     name: str
     lastname: str
     email: EmailStr
-    country: str 
+    country: str
     city: str
     password: str
     role: str
+
 
 class UserUpdate(BaseModel):
     name: str
     lastname: str
     email: EmailStr
     country: str
-    city: str 
-    password: str 
+    city: str
+    password: str
     role: str
+
 
 class UserPatch(BaseModel):
     name: str | None = None
