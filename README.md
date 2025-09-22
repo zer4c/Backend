@@ -4,7 +4,11 @@ Este proyecto es una API REST hecha con el framework de Fastapi.
 
 ## Caracteristicas 
 
-- Los usuarios tienen roles, ADMIN y USER, donde el administrador se valida con un JWT Bearer, este se valida a travez de un middleware.
+- Inicio de sesion y registro al sistema, donde las sesiones son tokens bearer.
+
+- Ahora no se podra utilizar el endpoint users, si no estas logeado, validado por un midleware para toda el endpoint.
+
+- Los usuarios tienen roles, ADMIN y USER, donde el administrador se valida mediante el sub proporcionado por el token bearer del login, este proceso se valida a travez de otro middleware.
 
 - Utiliza Mysql como gestor de BBDD, en el codigo se maneja a travez del ORM sqlModel
 
@@ -72,7 +76,7 @@ Al terminar todo utilice:
 ### Users CRUD
 los metodos post, patch, update y remove necesitan autenticacion con JWT bearer.
 
-- localhots:8000/user/
+- localhost:8000/user/
     - añadir un usuario `post /`
     - Obtener todos los usuarios `get /`
     - Obtener el usuario con un id `get /:id`
@@ -83,3 +87,9 @@ los metodos post, patch, update y remove necesitan autenticacion con JWT bearer.
     - city
     - country
     - email
+
+### Auth
+
+- localhost:8000/auth
+    - loguear con una cuenta ya creada `post /login`
+    - Registrar una nueva cuenta `post / register`
