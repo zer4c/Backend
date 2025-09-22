@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status
 
 import src.modules.users.controller as uc
-from src.modules.auth.jwt import validate_user
+from src.modules.auth.service_jwt import validate_role
 from src.database import SessionDep
 from src.modules.users.model import User
 from src.modules.users.schema import UserCreate, UserPatch, UserUpdate
@@ -11,7 +11,7 @@ router = APIRouter()
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def add_user(
-    user: UserCreate, session: SessionDep, validate_user: str = Depends(validate_user)
+    user: UserCreate, session: SessionDep, validate_role: str = Depends(validate_role)
 ):
     return uc.add_user_response(User(**user.model_dump()), session)
 
@@ -33,7 +33,7 @@ def get_user(id: int, session: SessionDep):
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_user(
-    id: int, session: SessionDep, validate_user: str = Depends(validate_user)
+    id: int, session: SessionDep, validate_role: str = Depends(validate_role)
 ):
     return uc.delete_user_response(id, session)
 
@@ -43,7 +43,7 @@ def update_user(
     user: UserUpdate,
     id: int,
     session: SessionDep,
-    validate_user: str = Depends(validate_user),
+    validate_role: str = Depends(validate_role),
 ):
     return uc.update_user_response(User(**user.model_dump()), id, session)
 
@@ -53,6 +53,6 @@ def patch_user(
     user: UserPatch,
     id: int,
     session: SessionDep,
-    validate_user: str = Depends(validate_user),
+    validate_role: str = Depends(validate_role),
 ):
     return uc.patch_user_response(User(**user.model_dump()), id, session)

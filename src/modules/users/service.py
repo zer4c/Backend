@@ -39,8 +39,8 @@ def get_all_users(session, city, country, email):
     return users
 
 
-def get_user_by_email(session: SessionDep, email: str):
-    user = session.exec(select(User).where(User.email == email)).all()
+def get_user_by_email(session: SessionDep, email: str) -> User:
+    user = session.exec(select(User).where(User.email == email)).one_or_none()
     session.close()
     return user
 

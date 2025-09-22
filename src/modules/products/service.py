@@ -49,8 +49,6 @@ def update_product(product: dict, id: int) -> None | dict:
 def patch_product(info: dict, id: int) -> None | dict:
     product = get_product_by_id(id)
     if product is not None:
-        print(list(info.keys()))
-        print(list(product.keys()))
         for key in list(info.keys()):
             if info[key] is not None:
                 product[key] = info[key]
