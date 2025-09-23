@@ -6,6 +6,8 @@ Este proyecto es una API REST hecha con el framework de Fastapi.
 
 - Inicio de sesion y registro al sistema, donde las sesiones son tokens bearer.
 
+- Sistema cache con redis para verificar sesiones activas. 
+
 - Ahora no se podra utilizar el endpoint users, si no estas logeado, validado por un midleware para toda el endpoint.
 
 - Los usuarios tienen roles, ADMIN y USER, donde el administrador se valida mediante el sub proporcionado por el token bearer del login, este proceso se valida a travez de otro middleware.
@@ -92,4 +94,5 @@ los metodos post, patch, update y remove necesitan autenticacion con JWT bearer.
 
 - localhost:8000/auth
     - loguear con una cuenta ya creada `post /login`
-    - Registrar una nueva cuenta `post / register`
+    - Registrar una nueva cuenta `post /register`
+    - Salir sesion de una cuenta `delete /logout`
