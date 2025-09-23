@@ -1,8 +1,8 @@
 from fastapi import APIRouter, status
 
-from src.database import SessionDep
+from src.modules.database.database import SessionDep
 from src.modules.auth import controller
-from src.modules.auth.schema import LoginInf
+from src.modules.auth.schema import LoginInf, LogoutInf
 from src.modules.users.schema import UserCreate
 from src.modules.users.model import User
 
@@ -19,4 +19,6 @@ def register_user(user: UserCreate, session: SessionDep):
     return controller.register_user(User(**user.model_dump()), session)
 
 
-# @router.delete('logout', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/logout', status_code=status.HTTP_204_NO_CONTENT)
+def logout_user(data: LogoutInf):
+    return controller.logout_response(data)

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 
 import src.modules.users.controller as uc
 from src.modules.auth.service_jwt import validate_role
-from src.database import SessionDep
+from src.modules.database.database import SessionDep
 from src.modules.users.model import User
 from src.modules.users.schema import UserCreate, UserPatch, UserUpdate
 

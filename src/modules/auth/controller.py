@@ -1,17 +1,17 @@
 from fastapi import HTTPException
 
 from src.config.response_schema import IResponse
-from src.database import SessionDep
 from src.modules.auth import service
-from src.modules.auth.schema import LoginInf
+from src.modules.auth.schema import LoginInf, LogoutInf
+from src.modules.database.database import SessionDep
 from src.modules.users import service as user_service
 from src.modules.users.model import User
 from src.modules.users.schema_dto import UserDTO
 
 
 def login_response(data: LoginInf, session: SessionDep):
-    user = service.login_user(data, session)
-    return user
+    user_data = service.login_user(data, session)
+    return user_data
 
 
 def register_user(user: User, session: SessionDep):
@@ -33,3 +33,8 @@ def register_user(user: User, session: SessionDep):
         detail="User added Succesfully", status_code=201, ok=True, data=user_dto
     )
     return response
+
+
+def logout_response(data: LogoutInf):
+    service.logout_user(data)
+    return "ok"

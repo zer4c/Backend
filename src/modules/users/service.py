@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from fastapi import HTTPException
 from sqlmodel import select
 
-from src.database import SessionDep
+from src.modules.database.database import SessionDep
 from src.modules.users.model import User
 
 load_dotenv()

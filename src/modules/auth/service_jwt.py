@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 from fastapi import HTTPException, Request
 from jwt import ExpiredSignatureError, PyJWTError, decode, encode
 
-from src.database import SessionDep
+from src.modules.database.database import SessionDep
+from src.modules.database.redis import get_redis_session
 from src.modules.users import service
 
 load_dotenv()
@@ -14,7 +15,7 @@ TIME_EXPIRATION = os.getenv("TIME_EXPIRATION")
 TIME_EXPIRATION = int(TIME_EXPIRATION)
 
 
-def generate_access_token(sub: int):
+def generate_access_token(sub: int, email: str):
     if not CRYPT_KEY:
         raise TypeError("Crypt key not found")
     if not TIME_EXPIRATION:
@@ -24,6 +25,12 @@ def generate_access_token(sub: int):
 
     payload = {"sub": str(sub), "exp": expiration, "iat": time_loc}
     token = encode(payload, key=CRYPT_KEY, algorithm="HS256")
+
+    expir_cache = int(timedelta(TIME_EXPIRATION).total_seconds())
+
+    redis = get_redis_session()
+    redis.set(email, token, ex=expir_cache)
+    redis.close()
     return token
 
 

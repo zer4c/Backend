@@ -6,16 +6,16 @@ import src.modules.health.route as healthRoutes
 import src.modules.products.route as productsRoutes
 import src.modules.users.route as usersRoutes
 import src.modules.auth.route as authRoutes
-from src.database import iniciate_database
+from src.modules.database.database import iniciate_database
 from src.modules.auth.service_jwt import validate_session_user
-
+from src.modules.database.redis import get_redis_session
 
 @asynccontextmanager
 async def iniciate_app(app: FastAPI):
     iniciate_database()
+    redis_session = get_redis_session()
     yield
-    print("terminate")
-
+    redis_session.close()
 
 app = FastAPI(lifespan=iniciate_app)
 
